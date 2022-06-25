@@ -1,7 +1,8 @@
-<?php include('functions.php') ?>
 <!DOCTYPE html>
 <html>
 <head>
+<?php include('functions.php') ?>
+
 	<title>Registration system PHP and MySQL - Create user</title>
 	<link rel="stylesheet" type="text/css" href="../style.css">
 	<style>
