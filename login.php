@@ -1,32 +1,28 @@
-<?php include('functions.php') ?>
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Registration system PHP and MySQL</title>
-	<link rel="stylesheet" type="text/css" href="style.css">
-</head>
-<body>
-	<div class="header">
-		<h2>Login</h2>
-	</div>
-	<form method="post" action="login.php">
+<?php
+ $DB_SERVER="localhost";
+ $DB_USERNAME="root";
+ $DB_PASSWORD="";
+ $DB_DATABASE"tutorial";
+ $connection = mysqli_connect($DB_SERVER,$DB_USERNAME,$DB_PASSWORD,$DB_DATABASE);
+ if(!$connection){
+  echo "Error: Unable to connect to mysql";
+  echo "Debugging error:"/mysqli_connect_error().php_EOL;
+  exit;
+ }
+ if (isset($_POST['username']) and isset($_POST['password'])){
+  $username = $_POST['username'];
+  $password = $_POST['password'];
+ }
 
-		<?php echo display_error(); ?>
+  $query = "SELECT * FROM 'users' WHERE username='$username' and password='$password'";
+$result = mysqli_query($connection, $query) or die(mysqli_error($connection));
+$count = mysqli_num_rows($result);
 
-		<div class="input-group">
-			<label>Username</label>
-			<input type="text" name="username" >
-		</div>
-		<div class="input-group">
-			<label>Password</label>
-			<input type="password" name="password">
-		</div>
-		<div class="input-group">
-			<button type="submit" class="btn" name="login_btn">Login</button>
-		</div>
-		<p>
-			Not yet a member? <a href="register.php">Sign up</a>
-		</p>
-	</form>
-</body>
-</html>
+if ($count > 0){ session_start();
+$_SESSION['username'] = $username;
+header("location: home.php");
+}
+else{
+header("location: index.php?msg=Invalid Login Credentials");
+}
+?>
